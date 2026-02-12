@@ -1,0 +1,44 @@
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    container_name: nginx-proxy
+    restart: always
+    ports: ["80:80", "443:443"]
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - ./nginx/vhost.d:/etc/nginx/vhost.d
+      - ./nginx/html:/usr/share/nginx/html
+    networks: [nginx-proxy]
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+      - DEFAULT_EMAIL=info@mergenova.com.tr
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./nginx/certs:/etc/nginx/certs:rw
+      - ./nginx/vhost.d:/etc/nginx/vhost.d
+      - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/acme:/etc/acme.sh
+    depends_on: [nginx-proxy]
+    networks: [nginx-proxy]
+
+  mergenovaweb:
+    build: .
+    image: urugakina/mergenovaweb:latest
+    container_name: mergenovaweb-web
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=mergenova.com.tr
+      - LETSENCRYPT_HOST=mergenova.com.tr
+      - LETSENCRYPT_EMAIL=info@mergenova.com.tr
+    networks: [nginx-proxy]
+    # Port publish ETME! Proxy zaten 80/443'ü dinleyip bu servise route ediyor.
+
+networks:
+  nginx-proxy:
+    name: nginx-proxy

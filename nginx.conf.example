@@ -1,0 +1,17 @@
+# Sunucuda dist/ içeriğini yayınlamak için örnek Nginx config.
+# Kullanım: Bu dosyayı sunucuya kopyalayıp /etc/nginx/sites-available/ veya conf.d/ altına
+# uygun şekilde dahil edin; root path'i dist klasörünüzün yolu ile değiştirin.
+
+server {
+    listen 80;
+    server_name mergenova.com.tr;
+    root /var/www/mergenovaweb/dist;   # dist klasörünün sunucudaki yolu
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+}

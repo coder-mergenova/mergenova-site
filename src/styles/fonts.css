@@ -1,0 +1,6 @@
+/* Türkçe karakter desteği: Latin Extended (ğ, ü, ş, ı, ö, ç, İ) için uyumlu font yığını */
+@layer base {
+  html {
+    font-family: "Inter", "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", system-ui, -apple-system, sans-serif;
+  }
+}

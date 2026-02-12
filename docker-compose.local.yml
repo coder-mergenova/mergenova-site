@@ -1,0 +1,8 @@
+services:
+  mergenovaweb:
+    build: .
+    image: urugakina/mergenovaweb:latest
+    container_name: mergenovaweb-local
+    ports:
+      - "8080:80"
+    restart: unless-stopped
