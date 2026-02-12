@@ -264,9 +264,14 @@ const Product = () => {
               ))}
             </ul>
 
-            <button className="flex items-center gap-2 text-white bg-indigo-600 hover:bg-indigo-700 px-8 py-4 rounded-xl font-bold transition-all">
+            <a
+              href="https://www.tontonkaraoke.com.tr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-white bg-indigo-600 hover:bg-indigo-700 px-8 py-4 rounded-xl font-bold transition-all inline-flex"
+            >
               <PlayCircle className="w-5 h-5" /> Deneyimlemeye Başla
-            </button>
+            </a>
           </div>
 
           <div className="lg:w-1/2 relative">
